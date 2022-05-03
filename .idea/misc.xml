@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout-w1240dp/activity_chat.xml" value="0.33741496598639453" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.33741496598639453" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout-w936dp/activity_chat.xml" value="0.19375" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout-w936dp/activity_login.xml" value="0.19375" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout/activity_chat.xml" value="0.22" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout/activity_login.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout/item_chat_adapter_item.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout/item_chat_adapter_me.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout/item_chat_adapter_other.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout/item_chat_inner_adapter_image.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/kjk89/AndroidStudioProjects/SimpleChattingApp/app/src/main/res/layout/item_chat_inner_adapter_text.xml" value="0.25052083333333336" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
