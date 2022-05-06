@@ -21,6 +21,6 @@ class ChatActivity : AppCompatActivity() {
         binding =
             DataBindingUtil.setContentView(this, R.layout.activity_chat)
         binding!!.lifecycleOwner = this
-
+        binding!!.chatViewModel = viewModel
     }
 }

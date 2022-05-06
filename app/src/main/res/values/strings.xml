@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">SimpleChattingApp</string>
     <string name="title_activity_chat">ChatActivity</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
+    <string name="prompt_email">yourMail@mail.com</string>
+    <string name="prompt_password">6자 이상</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>

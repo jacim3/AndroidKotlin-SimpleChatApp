@@ -2,7 +2,7 @@
 <layout>
     <data>
         <variable
-            name="viewModel"
+            name="loginViewModel"
             type="com.example.simplechattingapp.presentation.viewmodel.LoginViewModel" />
     </data>
 

@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 
 import com.example.simplechattingapp.R
 import com.example.simplechattingapp.databinding.ActivityLoginBinding
@@ -29,8 +30,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        binding.lifecycleOwner = this
+        binding.loginViewModel = loginViewModel
 
         val username = binding.username
         val password = binding.password
@@ -43,6 +45,7 @@ class LoginActivity : AppCompatActivity() {
             // disable login button unless both username / password is valid
             login.isEnabled = loginState.isDataValid
 
+            /* 에러를 출력 */
             if (loginState.usernameError != null) {
                 username.error = getString(loginState.usernameError)
             }
@@ -64,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK)
 
             //Complete and destroy login activity once successful
-            startActivity(Intent(this, ChatActivity::class.java))
+            //startActivity(Intent(this, ChatActivity::class.java))
         })
 
         username.afterTextChanged {

@@ -8,10 +8,15 @@ import com.example.simplechattingapp.data.LoginRepository
 import com.example.simplechattingapp.data.Result
 
 import com.example.simplechattingapp.R
+import com.example.simplechattingapp.data.model.LoggedInUser
 import com.example.simplechattingapp.presentation.ui.login.LoggedInUserView
 import com.example.simplechattingapp.presentation.ui.login.LoginFormState
 import com.example.simplechattingapp.presentation.ui.login.LoginResult
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.Single
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,16 +28,9 @@ class LoginViewModel @Inject constructor (private val loginRepository: LoginRepo
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(username: String, password: String) {
+    fun login(username: String, password: String){
         // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
-
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
-        }
+       loginRepository.login(username, password)
     }
 
     fun loginDataChanged(username: String, password: String) {
