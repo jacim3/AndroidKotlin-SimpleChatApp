@@ -2,9 +2,10 @@ package com.example.simplechattingapp.data.model
 
 import java.sql.Timestamp
 
-data class ChatRoomMapper(
-    val id:Int,
-    val name:String,
+data class LobbyMapper(
+    val title:String,
+    val lastMessage:String,
     val password:String,
-    val createAt:Timestamp
+    val timestamp:Long,
+    val owner:String
 )

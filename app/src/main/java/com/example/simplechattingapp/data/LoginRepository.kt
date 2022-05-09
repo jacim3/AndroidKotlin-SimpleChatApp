@@ -45,7 +45,7 @@ class LoginRepository @Inject constructor(
     }
 
     fun login(userName: String, password: String): Disposable {
-
+        Log.e("login()", "passed")
         return Single.create<Result<LoggedInUser>?> {
 
             dataSource.signUp(userName, password).addOnCompleteListener { task ->
@@ -82,7 +82,6 @@ class LoginRepository @Inject constructor(
                     }
                 }
             })
-
     }
 
     private fun setLoggedInUser(loggedInUser: LoggedInUser) {

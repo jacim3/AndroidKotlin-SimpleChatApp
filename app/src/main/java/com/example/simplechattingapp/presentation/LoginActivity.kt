@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
                 )
             }
 
-            setOnEditorActionListener { _, actionId, _ ->
+/*            setOnEditorActionListener { _, actionId, _ ->
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
@@ -94,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
                         )
                 }
                 false
-            }
+            }*/
 
             login.setOnClickListener {
                 loading.visibility = View.VISIBLE

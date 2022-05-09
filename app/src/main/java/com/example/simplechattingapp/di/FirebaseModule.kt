@@ -8,6 +8,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Qualifier
 
 
 @InstallIn(SingletonComponent::class)
@@ -22,5 +23,14 @@ class FirebaseModule {
     fun provideFirebaseRealtimeDB(): FirebaseDatabase = FirebaseDatabase.getInstance()
 
     @Provides
-    fun provideUserDB(database: FirebaseDatabase): DatabaseReference = database.getReference(Option.DB_NAME)
+    fun provideChatDB(database: FirebaseDatabase): DatabaseReference = database.getReference(Option.DB_NAME)
+
+    @Qualifier
+    @Retention(AnnotationRetention.RUNTIME)
+    annotation class ChatDB
+
+    @Qualifier
+    @Retention(AnnotationRetention.RUNTIME)
+    annotation class WebConnected
+
 }

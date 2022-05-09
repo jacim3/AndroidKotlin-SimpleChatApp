@@ -10,8 +10,7 @@ data class ItemLobby(
     var owner: String? = "",
     var password: String? = "",
     var title: String? = "",
-    var lastMessage: String? = "",
-    var timestamp: Long = 0
+    var lastMessage: String=""
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
@@ -20,7 +19,6 @@ data class ItemLobby(
             "password" to password,
             "title" to title,
             "lastMessage" to lastMessage,
-            "timestamp" to timestamp
         )
     }
 }
