@@ -2,7 +2,6 @@ package com.example.simplechattingapp.data.model
 
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
-import java.sql.Timestamp
 
 
 @IgnoreExtraProperties
@@ -37,14 +36,14 @@ data class ItemMembers(
 
 @IgnoreExtraProperties
 data class ItemMessages(
-    var name: String? = "",
+    var owner: String? = "",
     var messages: String? = "",
     var timestamp: Long
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
-            "name" to name,
+            "name" to owner,
             "messages" to messages,
             "timestamp" to timestamp,
         )

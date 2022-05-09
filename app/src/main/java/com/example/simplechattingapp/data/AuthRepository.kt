@@ -21,7 +21,7 @@ import javax.inject.Singleton
  */
 
 @Singleton
-class LoginRepository @Inject constructor(
+class AuthRepository @Inject constructor(
     @ApplicationContext private val  context: Context,
     private val dataSource: AuthDataSource
 ) {

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.example.simplechattingapp.R
+import com.example.simplechattingapp.data.model.LobbyMapper
 import com.example.simplechattingapp.databinding.ActivityChatBinding
 import com.example.simplechattingapp.presentation.viewmodel.ChatViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +19,10 @@ class ChatActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val item = intent.getSerializableExtra("item") as LobbyMapper
+        actionBar?.title = item.title
+
         binding =
             DataBindingUtil.setContentView(this, R.layout.activity_chat)
         binding!!.lifecycleOwner = this

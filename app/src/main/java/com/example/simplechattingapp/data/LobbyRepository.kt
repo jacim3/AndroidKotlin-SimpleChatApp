@@ -14,10 +14,13 @@ class LobbyRepository @Inject constructor(
     private val authDataSource: AuthDataSource
 ) {
     fun createRoom(data: Map<String, Any>): Task<Void>? {
-        return authDataSource.getUserEmail()?.let {
+        return getUserEmail()?.let {
             lobbyDataSource.createRoom(data, it)
         }
     }
+
+    fun getUserEmail() = authDataSource.getUserEmail()
+
 
     fun getLobbyDataInit(readCount:Int) = lobbyDataSource.getLobbyDataInit(readCount)
 

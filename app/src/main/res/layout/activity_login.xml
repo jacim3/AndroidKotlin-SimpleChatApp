@@ -3,7 +3,7 @@
     <data>
         <variable
             name="loginViewModel"
-            type="com.example.simplechattingapp.presentation.viewmodel.LoginViewModel" />
+            type="com.example.simplechattingapp.presentation.viewmodel.AuthViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

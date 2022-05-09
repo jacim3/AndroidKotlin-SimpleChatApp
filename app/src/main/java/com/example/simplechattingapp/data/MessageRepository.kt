@@ -5,5 +5,5 @@ import javax.inject.Singleton
 
 
 @Singleton
-class ChatRepository @Inject constructor() {
+class MessageRepository @Inject constructor() {
 }

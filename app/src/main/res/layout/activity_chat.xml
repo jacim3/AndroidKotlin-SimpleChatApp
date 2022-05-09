@@ -35,6 +35,7 @@
                 android:id="@+id/buttonSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:text="보내기"
                 android:layout_weight="3" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

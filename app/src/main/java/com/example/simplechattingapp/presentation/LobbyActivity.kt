@@ -2,8 +2,12 @@ package com.example.simplechattingapp.presentation
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextMenu
+import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,19 +17,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.simplechattingapp.R
+import com.example.simplechattingapp.data.model.LobbyMapper
 import com.example.simplechattingapp.databinding.ActivityLobbyBinding
 import com.example.simplechattingapp.presentation.adapter.LobbyAdapter
 import com.example.simplechattingapp.presentation.viewmodel.LobbyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LobbyActivity : AppCompatActivity() {
+class LobbyActivity : AppCompatActivity(), LobbyAdapter.OnRoomClickListener {
 
     private val lobbyViewModel: LobbyViewModel by viewModels()
     private lateinit var binding: ActivityLobbyBinding
     private lateinit var lobbyAdapter: LobbyAdapter
     private var dragFlag = true
     private var loadingIndicator: AlertDialog? = null
+
+
 
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,8 +62,11 @@ class LobbyActivity : AppCompatActivity() {
     }
 
     private fun initLobbyRecyclerView() {
+
         binding.recyclerViewRooms.apply {
-            lobbyAdapter = LobbyAdapter(this@LobbyActivity)
+            lobbyViewModel.getUserEmail()?.let {
+                lobbyAdapter = LobbyAdapter(this@LobbyActivity, it, this@LobbyActivity)
+            }
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = lobbyAdapter
         }
@@ -114,5 +124,32 @@ class LobbyActivity : AppCompatActivity() {
         dialog.findViewById<AppCompatButton>(R.id.buttonCancelCreateRoom).setOnClickListener {
             dialog.dismiss()
         }
+    }
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu?,
+        v: View?,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val inflater = menuInflater.inflate(R.menu.lobby_context_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return super.onContextItemSelected(item)
+
+    }
+
+    // LobbyAdapter 로 부터 수행된 이벤트 핸들링 by implement interface
+    override fun onItemClick(item: LobbyMapper) {
+        Intent(this, ChatActivity::class.java).apply {
+            putExtra("item", item)
+            startActivity(this)
+        }
+    }
+
+    // LobbyAdapter 로 부터 수행된 이벤트 핸들링 with contextMenu
+    override fun onItemLongClick(item: LobbyMapper) {
+
     }
 }

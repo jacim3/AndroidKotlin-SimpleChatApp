@@ -20,12 +20,11 @@ import javax.inject.Inject
 @HiltViewModel
 class LobbyViewModel @Inject constructor(
     application: Application,
-    private val repository: LobbyRepository
+    private val lobbyRepository: LobbyRepository
 ) : AndroidViewModel(application) {
 
     // TODO 사용자가 참조하는 범위를 기록.
     // TODO 가장 최신 데이터를 항상 참조.
-
 
     val receivedLobby = MutableLiveData<List<LobbyMapper>>()
     val totalLobby = emptyList<LobbyMapper>().toMutableList()
@@ -47,7 +46,7 @@ class LobbyViewModel @Inject constructor(
 
     fun createRoom(title: String, password: String) {
         createTimestamp().apply {
-            repository.createRoom(
+            lobbyRepository.createRoom(
                 mapOf(
                     Pair("password", password),
                     Pair("title", title),
@@ -63,7 +62,7 @@ class LobbyViewModel @Inject constructor(
 
     // 최초 초기화에 필요한 데이터 받아옴.
     fun getLobbyDataInit() {
-        repository.getLobbyDataInit(PAGE.READ_COUNT_INIT)
+        lobbyRepository.getLobbyDataInit(PAGE.READ_COUNT_INIT)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshotToMap(snapshot)
@@ -77,13 +76,12 @@ class LobbyViewModel @Inject constructor(
 
     // 이후 데이터 받아옴.
     fun getLobbyDataNext(afterTo: Long) {
-        repository.getLobbyDataNext(PAGE.READ_COUNT_NEXT, afterTo)
+        lobbyRepository.getLobbyDataNext(PAGE.READ_COUNT_NEXT, afterTo)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     Log.e("receiveSnapshot", snapshot.toString())
                     Log.e("receiveSnapshot", snapshot.value.toString())
                     snapshotToMap(snapshot)
-
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -92,9 +90,12 @@ class LobbyViewModel @Inject constructor(
             })
     }
 
+    // 생성된 방의 owner 여부를 체크하기 위한 이메일주소 리턴.
+    fun getUserEmail() = lobbyRepository.getUserEmail()
+
     // db에 최신 데이터가 들어갈 때마다 해당 데이터 의 key(날찌:타임스탬프(Long))를 감지하여 알릴 수 있도록
     fun attachLatestObserver() {
-        repository.observeLatestData().addChildEventListener(object :
+        lobbyRepository.observeLatestData().addChildEventListener(object :
             ChildEventListener {
 
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -112,13 +113,14 @@ class LobbyViewModel @Inject constructor(
         })
     }
 
-    // 서버에 데이터 업로드를 위한 타임스탬프 생성
+    // 서버에 데이터 업로드를 위한 키값인 타임스탬프 생성
     private fun createTimestamp() = Timestamp(Calendar.getInstance().timeInMillis).time
 
     private fun makeToast(text: String) {
         Toast.makeText(getApplication(), text, Toast.LENGTH_SHORT).show()
     }
 
+    // snapshot 의 데이터의 null 을 체크하여, 아래 메서드에 전달.
     private fun snapshotToMap(snapshot: DataSnapshot) {
         snapshot.value?.let {
             mapToSortedMap(it).apply {
@@ -128,14 +130,15 @@ class LobbyViewModel @Inject constructor(
         }
     }
 
-    // realtimeDatabase 에서 받아온 데이터에 대한 snapshot 가 정렬되지 않아, treemap 형태로 정렬 및 리턴
+    // nullCheck 가 완료된 snapshot.value(Map<String,Any) 를 TreeMap 을 통하여 키 값을 기준으로 정렬하여
+    // 아래 메서드에 리턴.
     private fun mapToSortedMap(value: Any): List<LobbyMapper> {
         return sortedMapToLobbyMapper(TreeMap<String, Any> { s1, s2 -> (s2.toLong() - s1.toLong()).toInt() }.apply {
             this.putAll(value as Map<String, Any>)
         })
     }
 
-    // 받은 Map 형태의 데이터를 Object 로 변환
+    //  mapToSortedMap() 에서 리턴받은 TreeMap 을 통하여 Object 배열 생성.
     private fun sortedMapToLobbyMapper(map: TreeMap<String, Any>): List<LobbyMapper> {
         return mutableListOf<LobbyMapper>().apply {
             map.forEach {

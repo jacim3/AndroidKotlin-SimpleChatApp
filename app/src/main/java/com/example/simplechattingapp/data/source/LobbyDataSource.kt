@@ -1,18 +1,13 @@
 package com.example.simplechattingapp.data.source
 
 import android.util.Log
-import com.example.simplechattingapp.constants.Option
+import com.example.simplechattingapp.constants.DB
 import com.example.simplechattingapp.data.model.ItemLobby
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseReference
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers.io
 import io.reactivex.subjects.PublishSubject
 import java.sql.Timestamp
 import javax.inject.Inject
@@ -23,11 +18,14 @@ class LobbyDataSource @Inject constructor(
     private val database: DatabaseReference
 ) {
     private val subject = PublishSubject.create<DataSnapshot>()
-    private val reference = database.child(Option.DB_CATEGORY_CHAT)
-        .child(Option.DB_PATH_CHAT_LOBBY)
-    val observable: Flowable<DataSnapshot> = subject.toFlowable(BackpressureStrategy.MISSING)
+    private val reference = database.child(DB.PATH_CHAT)
+        .child(DB.PATH_CHAT_LOBBY)
+    private val lobbyPath = "${DB.PATH_CHAT}/${DB.PATH_CHAT_LOBBY}"
+
+
+/*    val observable: Flowable<DataSnapshot> = subject.toFlowable(BackpressureStrategy.MISSING)
         .doOnSubscribe {
-            database.child(Option.DB_CATEGORY_CHAT).get().addOnCompleteListener { task ->
+            database.child(DB.PATH_CHAT).get().addOnCompleteListener { task ->
                 when (task.isSuccessful) {
                     true -> task.result?.let { result ->
                         Log.e("asdfasdfasdf", result.toString())
@@ -36,21 +34,16 @@ class LobbyDataSource @Inject constructor(
             }
         }.doOnCancel {
 
-        }
-
-    // TODO PAGING 필요 !!!
-    fun readLobbyData() =
-        database.child(Option.DB_CATEGORY_CHAT).child(Option.DB_PATH_CHAT_LOBBY).orderByKey()
-            .startAfter("1651934470013").get()
+        }*/
 
     fun createRoom(data: Map<String, Any>, userEmail: String): Task<Void> {
         return database.updateChildren(
             hashMapOf<String, Any>(
-                "${Option.DB_CATEGORY_CHAT}/${Option.DB_PATH_CHAT_LOBBY}/${data["timestamp"]}" to ItemLobby(
-                    userEmail,
-                    data["password"] as String?,
-                    data["title"] as String?,
-                    ""
+                 "${lobbyPath}/${data["timestamp"]}" to ItemLobby(
+                    owner = userEmail,
+                    password = data["password"] as String?,
+                    title = data["title"] as String?,
+                    lastMessage = ""
                 ).toMap()
             )
         )

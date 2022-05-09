@@ -1,6 +1,6 @@
 package com.example.simplechattingapp.di
 
-import com.example.simplechattingapp.constants.Option
+import com.example.simplechattingapp.constants.DB
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -23,7 +23,7 @@ class FirebaseModule {
     fun provideFirebaseRealtimeDB(): FirebaseDatabase = FirebaseDatabase.getInstance()
 
     @Provides
-    fun provideChatDB(database: FirebaseDatabase): DatabaseReference = database.getReference(Option.DB_NAME)
+    fun provideChatDB(database: FirebaseDatabase): DatabaseReference = database.getReference(DB.NAME)
 
     @Qualifier
     @Retention(AnnotationRetention.RUNTIME)
