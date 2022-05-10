@@ -29,7 +29,7 @@ class LobbyViewModel @Inject constructor(
     val receivedLobby = MutableLiveData<List<LobbyMapper>>()
     val totalLobby = emptyList<LobbyMapper>().toMutableList()
     val loadingIndicator = MutableLiveData<LoadingIndicator>().apply {
-        this.postValue(LoadingIndicator("show", "채팅 초기화"))
+        this.postValue(LoadingIndicator(status = "show", text = "채팅방 로딩중...."))
     }
 
     private val minCursor = MutableLiveData<Long>().apply { this.postValue(0L) }
@@ -93,7 +93,7 @@ class LobbyViewModel @Inject constructor(
     // 생성된 방의 owner 여부를 체크하기 위한 이메일주소 리턴.
     fun getUserEmail() = lobbyRepository.getUserEmail()
 
-    // db에 최신 데이터가 들어갈 때마다 해당 데이터 의 key(날찌:타임스탬프(Long))를 감지하여 알릴 수 있도록
+    // db에 최신 데이터가 들어갈 때마다 해당 데이터의 key(날찌:타임스탬프(Long))를 감지하여 알릴 수 있도록
     fun attachLatestObserver() {
         lobbyRepository.observeLatestData().addChildEventListener(object :
             ChildEventListener {

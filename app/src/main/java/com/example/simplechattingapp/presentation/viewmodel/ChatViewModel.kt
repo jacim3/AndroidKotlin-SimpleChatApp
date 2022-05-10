@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.simplechattingapp.data.MessageRepository
 import com.example.simplechattingapp.data.model.FirebaseCursor
+import com.example.simplechattingapp.data.model.ItemMessages
 import com.example.simplechattingapp.data.model.LobbyMapper
+import com.example.simplechattingapp.data.model.MessageMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.sql.Timestamp
 import java.util.*
@@ -50,25 +52,23 @@ class ChatViewModel @Inject constructor(
 
     // nullCheck 가 완료된 snapshot.value(Map<String,Any) 를 TreeMap 을 통하여 키 값을 기준으로 정렬하여
     // 아래 메서드에 리턴.
-    private fun mapToSortedMap(value: Any): List<LobbyMapper> {
+    private fun mapToSortedMap(value: Any): MutableList<ItemMessages> {
         return sortedMapToMessageMapper(TreeMap<String, Any> { s1, s2 -> (s2.toLong() - s1.toLong()).toInt() }.apply {
             this.putAll(value as Map<String, Any>)
         })
     }
 
     //  mapToSortedMap() 에서 리턴받은 TreeMap 을 통하여 Object 배열 생성.
-    private fun sortedMapToMessageMapper(map: TreeMap<String, Any>): List<LobbyMapper> {
-        return mutableListOf<LobbyMapper>().apply {
+    private fun sortedMapToMessageMapper(map: TreeMap<String, Any>): MutableList<ItemMessages> {
+        return mutableListOf<ItemMessages>().apply {
             map.forEach {
 
                 (it.value as Map<String, Any>).also { item ->
                     this.add(
-                        LobbyMapper(
-                            title = item["title"].toString(),
-                            lastMessage = item["lastMessage"].toString(),
-                            password = item["password"].toString(),
-                            timestamp = it.key.toLong(),
-                            owner = item["owner"].toString()
+                        ItemMessages(
+                            owner = item["owner"].toString(),
+                            message = item["message"].toString(),
+                            timestamp = it.key.toLong()
                         )
                     )
                 }

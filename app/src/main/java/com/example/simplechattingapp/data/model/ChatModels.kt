@@ -4,6 +4,8 @@ import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 
 
+/* 서버에 업로드 하기위한 데이터 형식을 정의하는 DAO 모델 */
+
 @IgnoreExtraProperties
 data class ItemLobby(
     var owner: String? = "",
@@ -37,14 +39,14 @@ data class ItemMembers(
 @IgnoreExtraProperties
 data class ItemMessages(
     var owner: String? = "",
-    var messages: String? = "",
+    var message: String? = "",
     var timestamp: Long
 ) {
     @Exclude
     fun toMap(): Map<String, Any?> {
         return mapOf(
             "name" to owner,
-            "messages" to messages,
+            "messages" to message,
             "timestamp" to timestamp,
         )
     }

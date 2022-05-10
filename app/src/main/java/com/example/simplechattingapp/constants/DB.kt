@@ -3,7 +3,6 @@ package com.example.simplechattingapp.constants
 
 object DB {
 
-
     const val NAME = "chat-databases"
 
     const val PATH_CHAT = "CHATS"
